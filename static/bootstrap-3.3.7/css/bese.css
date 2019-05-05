@@ -1,0 +1,105 @@
+* {
+    text-decoration: none;
+}
+
+body {
+    margin-top: 60px !important;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+a.logo {
+    display: inline-block;
+    font-size: 20px;
+}
+
+div.nav {
+    background-color: gainsboro;
+    border-bottom: 1px solid #ccc;
+}
+
+div.nav a {
+    color: #455874;
+    padding-right: 20px;
+}
+
+div.blog:not(:last-child) {
+    border-bottom: 1px solid #ccc;
+}
+
+div.paginator {
+    text-align: center;
+}
+
+/*评论*/
+.comment-form input:focus, .comment-form textarea:focus {
+    border-color: #666;
+}
+
+.comment-form input {
+    border: 1px solid #aaa;
+    margin-bottom: 15px;
+    width: 100%;
+    padding: 10px 10px;
+    font-size: 16px;
+    line-height: 100%;
+    transition: 0.4s border-color linear;
+}
+
+.comment-form textarea {
+    border: 1px solid #aaa;
+    /*margin-bottom: 15px;*/
+    width: 100%;
+    padding: 10px 10px;
+    /*font-size: 16px;*/
+    /*line-height: 20px !important;*/
+    min-height: 183px;
+    transition: 0.4s border-color linear;
+}
+
+/*.comment-area {*/
+/*padding: 0 30px 0;*/
+/*}*/
+
+.comment-form {
+    margin-top: 15px;
+}
+
+.comment-form .comment-btn {
+    background-color: #fff;
+    border: 1px solid #aaa;
+    font-size: 16px;
+    padding: 5px 10px;
+}
+
+.comment-list-panel {
+    margin-top: 30px;
+}
+
+.comment-list {
+    margin-top: 15px;
+}
+
+.comment-item:not(:last-child) {
+    border-bottom: 1px #ccc solid;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+.comment-item .nickname,
+.comment-item .submit-date {
+    color: #777;
+    font-size: 14px;
+}
+
+.comment-item .nickname:after {
+    content: ' ·';
+}
+
+.comment-item .text {
+    padding-top: 5px;
+    font-size: 16px;
+}

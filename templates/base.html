@@ -1,0 +1,52 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>神马影评</title>
+    <link rel="stylesheet" href="{% static 'bootstrap-3.3.7/css/bese.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-3.3.7/css/bootstrap.min.css' %}">
+    <script src="{% static 'bootstrap-3.3.7/js/jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap-3.3.7/js/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'highlights/bw.css' %}">
+</head>
+<body>
+{#导航条#}
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">神马影评</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="{% block home_ac %} {% endblock %}"><a href="{% url 'home' %}">首页</a></li>
+                <li class="{% block list_ac %} {% endblock %}"><a href="{% url 'list' %}">博客</a></li>
+            </ul>
+            {#搜索框#}
+            <form action="{% url 'haystack_search' %}" class="navbar-form navbar-left" method="get">
+                <div class="form-group">
+                    <input type="text" name="q" class="form-control" placeholder="请输入关键字">
+                </div>
+                <button type="submit" class="btn-default btn">搜索</button>
+            </form>
+        </div>
+    </div>
+</nav>
+{#导航条 end#}
+
+
+{% block content %}{% endblock %}
+</body>
+</html>

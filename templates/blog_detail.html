@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            {#博客详情#}
+            <div class="col-xs-12"><h3>博客名称：{{ blog.title }}</h3>
+                <p>作者：{{ blog.author }}
+                    分类：<a href="{% url 'type' blog.blog_type.id %}">{{ blog.blog_type }}</a>
+                    分布时间：{{ blog.created_time | date:'Y-m-d H:i:s' }}
+                    阅读次数:({{ blog.read_count }})
+                </p>
+                <p>博客介绍：{{ blog.content | safe }}</p>
+
+                {#博客上下篇跳转#}
+                <div>
+                    <p>上一篇:
+                        {% if previous_blog %}
+                            <a href="{% url 'detail' previous_blog.pk %}">{{ previous_blog.title }}</a>
+                        {% else %}
+                            暂无最新博客
+                        {% endif %}
+                    </p>
+                    <p>下一篇:
+                        {% if next_blog %}
+                            <a href="{% url 'detail' next_blog.pk %}">{{ next_blog.title }}</a>
+                        {% else %}
+                            已经是最后一条博客了
+                        {% endif %}
+                    </p>
+                </div>
+                {#博客上下篇跳转 end#}
+            </div>
+            {#发表评论#}
+            <div class="col-xs-12">
+                <section class="comment-area">
+                    <h3>发表评论：</h3>
+                    <form action="{% url 'blog_comment' blog.pk %}" method="post" class="comment-form">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="{{ form.name.id_for_label }}">姓名：</label>
+                                {{ form.name }}
+                                {{ form.name.errors }}
+                                {#{{ form.name.errors }} 自动检查错误#}
+                            </div>
+                            <div class="col-md-4">
+                                <label for="{{ form.email.id_for_label }}">邮箱：</label>
+                                {{ form.email }}
+                                {{ form.email.errors }}
+                            </div>
+                            <div class="col-md-12">
+                                <label for="{{ form.text.id_for_label }}">评论：</label>
+                                {{ form.text }}
+                                {{ form.text.errors }}
+                                <button type="submit" class="comment-btn">发布</button>
+                            </div>
+                        </div>
+                    </form>
+                    {#评论列表#}
+                    <div class="comment_list_panel">
+                        {#<h3>评论列表：一共{{ blog.comment_set.count }}篇评论</h3>#}
+                        <h3>评论列表：一共{{ comment_list | length }}篇评论</h3>
+                        <ul class="comment-list list-unstyled">
+                            {% for comment in comment_list %}
+                                <li class="comment-item">
+                                    姓名：<span class="nikename">{{ comment.name }}</span>
+                                    时间：<span>{{ comment.created_time | date:'Y-m-d H:i:s' }}</span>
+                                    <div class="text">
+                                        内容：{{ comment.text }}
+                                    </div>
+                                </li>
+                            {% empty %}
+                                暂无评论
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </section>
+
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

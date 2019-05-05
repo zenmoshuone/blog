@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% block typenmae %}{% endblock %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        {% block list %}<h4>博客列表 (一共有{{ page.paginator.count }}篇博客文章) </h4>{% endblock %}
+                    </div>
+                    <div class="panel-body">
+                        {% for blog in page.object_list %}
+                            <div class="blog">
+                                <h3><a href="{% url 'detail' blog.pk %}">{{ blog.title }}</a></h3>
+                                <p>
+                                    <span class="glyphicon glyphicon-user"></span>：{{ blog.author }}
+                                    <span class="glyphicon glyphicon-tags"></span> ：<a
+                                        href="{% url 'type' blog.blog_type.id %}">{{ blog.blog_type }}</a>
+                                    <span class="glyphicon glyphicon-time"></span>：{{ blog.created_time | date:'Y-m-d H:i:s' }}
+                                    <span class="glyphicon glyphicon-eye-open"></span> : {{ blog.read_count }}
+                                </p>
+                                {#    truncatechars:30 显示前80个字，其他隐藏#}
+                                <p>{{ blog.content|truncatechars:80 }}</p>
+                            </div>
+                        {% empty %}
+                            <div class="blog"><p>暂时未更新文章，尽情期待</p></div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                {#页码显示 分页#}
+                <nav aria-label="Page navigation">
+                    <div class="paginator">
+                        <ul class="pagination">
+                            {#上一页按钮#}
+                            <li>
+                                {#当前页有上一页就可以跳转，没有上一页就只是一个标签，不可以跳转#}
+                                {% if page.has_previous %}
+                                    <a href="?page={{ page.previous_page_number }}&q={{ info }}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                {% else %}
+                                    <span aria-hidden="true">&laquo;</span>
+                                {% endif %}
+                            </li>
+                            {#中间页面按钮#}
+                            {% for i in page_range %}
+                                {#   number 当前页面#}
+                                {% if i == page.number %}
+                                    {#选中当前页面按钮后添加类'active'(添加颜色),并把a标签变成span标签，使用户不可以在点击当前页面#}
+                                    <li class="active"><span>{{ i }}</span></li>
+                                {% else %}
+                                    {% if i == '...' %}
+                                        <li><span>{{ i }}</span></li>
+                                    {% else %}
+                                        {#没选中的页面按钮还是a标签，可以跳转#}
+                                        <li><a href="?page={{ i }}&q={{ info }}">{{ i }}</a></li>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                            {#下一页按钮#}
+                            <li>
+                                {#当前页有下一页就可以跳转，没有下一页就只是一个标签，不可以跳转#}
+                                {% if page.has_next %}
+                                    <a href="?page={{ page.next_page_number }}&q={{ info }}" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                {% else %}
+                                    <span aria-hidden="true">&raquo;</span>
+                                {% endif %}
+                            </li>
+                        </ul>
+                        <p>共有{{ page.paginator.count }}篇博客文章,
+                            当前第{{ page.number }}页,
+                            共{{ page.paginator.num_pages }}页
+                        </p>
+                    </div>
+
+                </nav>
+            </div>
+
+            {#右侧分类#}
+            <div class="col-xs-6 col-md-4">
+                {#博客分类#}
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h4>博客分类</h4></div>
+                    <div class="panel-body">
+                        <ul>
+                            {% for type in types %}
+                                <li><a href="{% url 'type' type.id %}">{{ type.type_name }}({{ type.blog_count }})</a>
+                                </li>
+                                {#                                <li>#}
+                                {#                                    <a href="{% url 'type' type.id %}">{{ type.type_name }}({{ type.blog_set.count }})</a>#}
+                                {#                                </li>#}
+                            {% empty %}
+                                <p>暂无博客，尽情期待</p>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {#日期归档#}
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h4>日期归档</h4></div>
+                    <div class="panel-body">
+                        <ul>
+                            {#.items 遍历字典的键和值#}
+                            {% for date,count in date_list.items %}
+                                <li>
+                                    <a href="{% url 'blog_date' date.year date.month %}">
+                                        {{ date |date:'Y年n月' }}({{ count }})
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {#热门排行#}
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h4>热门排行</h4></div>
+                    <div class="panel-body">
+                        <ul>
+                            {% for i in posts %}
+                                <li>
+                                    <a href="{% url 'detail' i.id %}">
+                                        {{ i.blog }}({{ i.count }})
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
+{% block list_ac %} active {% endblock %}
