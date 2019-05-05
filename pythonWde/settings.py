@@ -125,13 +125,13 @@ EMAIL_HOST = 'smtp.163.com'
 EMAIL_PORT = 25
 
 # 发送邮件的邮箱地址
-EMAIL_HOST_USER = 'z475975246@163.com'
-
-DEFAULT_FROM_EMAIL = 'z475975246@163.com'
-
-# 在邮箱中设置的授权码
-EMAIL_HOST_PASSWORD = 'z989754'
-
+EMAIL_HOST_USER = 'x'
+#EMAIL_HOST_USER = '填自己的邮箱'
+DEFAULT_FROM_EMAIL = 'x'
+#DEFAULT_FROM_EMAIL = '填自己的邮箱'
+# 在163邮箱中设置的授权码
+EMAIL_HOST_PASSWORD = 'x'
+#EMAIL_HOST_PASSWORD = '填授权码'
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'blog.whoosh_cn_backends.WhooshEngine',
