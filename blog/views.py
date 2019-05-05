@@ -155,8 +155,9 @@ from django.http import HttpResponse
 def send(request):
     try:
         html_message = '<a href="http://127.0.0.1:8000/blog/index/">点击激活</a>'
-        send_mail(subject='来自神马影评的激活邮件', message='xxx', from_email=settings.DEFAULT_FROM_EMAIL,
-                  recipient_list=['z475975246@163.com'], html_message=html_message, fail_silently=False)
+        send_mail(subject='来自xxx的激活邮件', message='xxx', from_email=settings.DEFAULT_FROM_EMAIL,
+                  recipient_list=['x'], html_message=html_message, fail_silently=False)
+                  #recipient_list=['填自己的邮箱地址']
     except Exception as e:
         return HttpResponse(e)
     else:
